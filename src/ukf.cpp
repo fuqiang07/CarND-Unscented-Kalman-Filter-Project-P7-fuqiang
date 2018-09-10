@@ -120,7 +120,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
 
     // first measurement
     Debug( "[ukf]: Initialized begin: ====================" << endl);
-    ekf_.x_ << 0.0, 0.0, 0.0, 0.0, 0.0;
+    x_ << 0.0, 0.0, 0.0, 0.0, 0.0;
 
     P_ << 0.1, 0, 0, 0, 0,
           0, 0.1, 0, 0, 0,
@@ -128,7 +128,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
           0, 0, 0, 10, 0,
           0, 0, 0, 0, 10;
 
-    if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR) {
+    if (meas_package.sensor_type_ == MeasurementPackage::RADAR) {
       /**
       Convert radar from polar to cartesian coordinates and initialize state.
       */
