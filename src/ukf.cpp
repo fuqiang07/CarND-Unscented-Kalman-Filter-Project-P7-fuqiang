@@ -8,7 +8,7 @@ using Eigen::VectorXd;
 using std::vector;
 
 //debug
-#define USERDEBUG
+//#define USERDEBUG
 
 #ifdef USERDEBUG
 #define Debug(x) cout << x
@@ -122,11 +122,13 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
     Debug( "[ukf]: Initialized begin: ====================" << endl);
     x_ << 0.0, 0.0, 0.0, 0.0, 0.0;
 
+    /*
     P_ << 0.1, 0, 0, 0, 0,
           0, 0.1, 0, 0, 0,
           0, 0, 10, 0, 0,
           0, 0, 0, 10, 0,
           0, 0, 0, 0, 10;
+    */
 
     if (meas_package.sensor_type_ == MeasurementPackage::RADAR) {
       /**
@@ -142,6 +144,11 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
       float yawd = 0.0f;
 
       x_ << px, py, v, yaw, yawd;
+
+      P_ << 0.1, 0, 0, 0,
+            0, 0.1, 0, 0,
+            0, 0, 10, 0,
+            0, 0, 0, 10;
     }
     else if (meas_package.sensor_type_ == MeasurementPackage::LASER) {
       /**
@@ -155,6 +162,11 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
       float yawd = 0.0f;
 
       x_ << px, py, v, yaw, yawd;
+
+      P_ << 0.1, 0, 0, 0,
+            0, 0.1, 0, 0,
+            0, 0, 100, 0,
+            0, 0, 0, 100;
     }
 
     // initialize the previous_timestamp
