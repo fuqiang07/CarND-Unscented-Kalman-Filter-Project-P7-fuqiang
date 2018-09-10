@@ -147,9 +147,9 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
 
       P_ << 0.1, 0, 0, 0, 0,
             0, 0.1, 0, 0, 0,
-            0, 0, 10, 0, 0,
-            0, 0, 0, 10, 0,
-            0, 0, 0, 0, 10;
+            0, 0, 5, 0, 0,
+            0, 0, 0, 5, 0,
+            0, 0, 0, 0, 5;
     }
     else if (meas_package.sensor_type_ == MeasurementPackage::LASER) {
       /**
@@ -166,9 +166,9 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
 
       P_ << 0.1, 0, 0, 0, 0,
             0, 0.1, 0, 0, 0,
-            0, 0, 100, 0, 0,
-            0, 0, 0, 100, 0,
-            0, 0, 0, 0, 100;
+            0, 0, 5, 0, 0,
+            0, 0, 0, 5, 0,
+            0, 0, 0, 0, 5;
     }
 
     // initialize the previous_timestamp
