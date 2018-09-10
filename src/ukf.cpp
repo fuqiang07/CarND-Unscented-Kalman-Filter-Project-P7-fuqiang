@@ -38,10 +38,10 @@ UKF::UKF() {
   P_ = MatrixXd(n_x_, n_x_);
 
   // Process noise standard deviation longitudinal acceleration in m/s^2
-  std_a_ = 30;
+  std_a_ = 2;
 
   // Process noise standard deviation yaw acceleration in rad/s^2
-  std_yawdd_ = 30;
+  std_yawdd_ = 0.5;
   
   //DO NOT MODIFY measurement noise values below these are provided by the sensor manufacturer.
   // Laser measurement noise standard deviation position1 in m
@@ -143,7 +143,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
 
       x_ << px, py, v, yaw, yawd;
     }
-    else if (measurement_pack.sensor_type_ == MeasurementPackage::LASER) {
+    else if (meas_package.sensor_type_ == MeasurementPackage::LASER) {
       /**
       Initialize state.
       */
@@ -212,6 +212,12 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
 
     UpdateRadar(meas_package);
 
+    //debug info
+    Debug( "[ukf]: Correction with RADAR Completed! ====================" << endl);
+    Debug( "[ukf]: x_ = " << x_ << endl);
+    Debug( "[ukf]: P_ = " << P_ << endl);
+    Debug( "[ukf]: NIS_radar_ = " << NIS_radar_ << endl);
+
   } else {
     // Laser updates
 
@@ -219,12 +225,15 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
     Debug( "[ukf]: Sensor Type = LASER ~~~~~~~~~" << endl);
 
     UpdateLidar(meas_package);
+
+    //debug info
+    Debug( "[ukf]: Correction with LASER Completed! ====================" << endl);
+    Debug( "[ukf]: x_ = " << x_ << endl);
+    Debug( "[ukf]: P_ = " << P_ << endl);
+    Debug( "[ukf]: NIS_lidar_ = " << NIS_lidar_ << endl);
   }
 
-  //debug info
-  Debug( "[ukf]: Correction Completed! ====================" << endl);
-  Debug( "[ukf]: x_ = " << x_ << endl);
-  Debug( "[ukf]: P_ = " << P_ << endl);
+
 }
 
 /**
